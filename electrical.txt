@@ -1,0 +1,50 @@
+%# generate a document describing all possible electrical test cases
+%
+%import itertools
+%def powerset(items):
+%   global itertools
+%   return [x for length in range(len(items)+1) for x in itertools.combinations(items, length)]
+%def device(dev, l):
+%   for i in l:
+%      if i.split(' ')[0] == dev:
+%         return True
+%   return False
+%s = ['Load']
+%s += ['Gen 4x500kW@40%', 'Gen 4x500kW@10%']
+%s += ['Pv 300kW', 'Pv 1000kW']
+%s += ['Ess 1000kW@1h', 'Ess4000@4h']
+%s += ['Grid'] # also 'Grid In', 'Grid Out'
+
+
+* Electrical Model Testing Configurations
+
+This document outlines the tests we will conduct for the testing of this
+in order to show that.
+
+| Serial | Configuration |
+%sc = powerset(s)
+%n = 1
+%for t in sorted(sc,key=lambda x: 'Grid' in x):
+%  if len(t) == 1: # we need two or more devices
+%     continue
+%  if not device('Load',t): # at least a load
+%     continue
+%  if not (device('Gen',t) or device('Grid',t)): # either Gen or a Grid
+%     continue
+%  ok = True
+%  for et in ['Gen', 'Ess', 'Pv']:
+%    nt = 0
+%    for i in t:
+%      if i.split(' ')[0] == et:
+%        nt += 1
+%    if nt > 1:
+%       ok = False
+%  if not ok:
+%    continue
+%  tl = ' '.join(t)
+  | $n | $tl |
+%  n += 1
+
+We'll do an explore and a prototype on each one.
+Who's going to run the HOMER models.
+How do we test it.

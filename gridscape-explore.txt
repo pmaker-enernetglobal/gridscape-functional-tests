@@ -1,0 +1,18 @@
+* Gridscape Prototype Tests - Alpha
+
+Each of these tests consists of a varying electrical configuration as
+outlined in the table. The initial design with parameters for
+financials etc will be defined in project "Gridscape Prototype Tests"
+with design "Test Gridscape Prototype Test 0" being the design we clone from.
+This will be setup with Simon/Dusan for reasonable parameters.
+
+| Serial | Configuration |
+%n = 1
+%for gen in ['', 'Gen 4x500@40%', 'Gen4x500@10%']:
+ %for grid in ['', 'Grid In', 'Grid InOut']:
+  %for pv in ['', 'Pv']:
+   %for ess in ['', 'Ess 1200kW@4h', 'Ess 1200kW@1h']:
+    %for load in ['Load 1000kW', 'Load 300..1000kW triwave', 'Load Site']:
+     %if gen == '' and grid == '': continue
+     | $n | $load $gen $grid $pv $ess |
+     %n += 1
