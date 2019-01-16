@@ -2,7 +2,7 @@
 # gridscape-functional-tests - a generator for GS Functional tests./ 
 #
 
-.PHONEY: explore prototype
+.PHONEY: explore prototype loadcurves
 
 all:	explore prototype
 
@@ -16,3 +16,7 @@ prototype:
 	../transmogrify/transmogrify.py < gridscape-prototype.txt | \
 	../microword/microword.py
 	mv output.docx gridscape-prototype.docx
+
+loadcurves:
+	yes 1000 | head -8760 >Load_1MW.csv
+	./pvavailpu.py >PvAvailPu.csv
